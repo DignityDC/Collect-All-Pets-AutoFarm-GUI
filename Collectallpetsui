@@ -1,0 +1,230 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TopFrameRGB = Instance.new("Frame")
+local AutofarmOn = Instance.new("TextButton")
+local AutofarmOff = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(65, 65, 65)
+MainFrame.Position = UDim2.new(0.642479122, 0, 0.382822096, 0)
+MainFrame.Size = UDim2.new(0, 229, 0, 83)
+
+TopFrameRGB.Name = "TopFrameRGB"
+TopFrameRGB.Parent = MainFrame
+TopFrameRGB.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TopFrameRGB.Size = UDim2.new(0, 228, 0, 7)
+
+AutofarmOn.Name = "AutofarmOn"
+AutofarmOn.Parent = MainFrame
+AutofarmOn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutofarmOn.Position = UDim2.new(0.169087112, 0, 0.167822152, 0)
+AutofarmOn.Size = UDim2.new(0, 150, 0, 26)
+AutofarmOn.Font = Enum.Font.RobotoMono
+AutofarmOn.Text = "Autofarm On"
+AutofarmOn.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutofarmOn.TextSize = 14.000
+
+AutofarmOff.Name = "AutofarmOff"
+AutofarmOff.Parent = MainFrame
+AutofarmOff.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutofarmOff.Position = UDim2.new(0.169087112, 0, 0.594742298, 0)
+AutofarmOff.Size = UDim2.new(0, 150, 0, 26)
+AutofarmOff.Font = Enum.Font.RobotoMono
+AutofarmOff.Text = "Autofarm Off"
+AutofarmOff.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutofarmOff.TextSize = 14.000
+
+-- Scripts:
+
+local function FXOIBGV_fake_script() -- TopFrameRGB.RGB 
+	local script = Instance.new('LocalScript', TopFrameRGB)
+
+	local frame = script.Parent
+	
+	while true do
+		for hue = 0, 255, 4 do
+			-- HSV = hue, saturation, value
+			-- If we loop from 0 to 1 repeatedly, we get a rainbow!
+			frame.BorderColor3 = Color3.fromHSV(hue/256, 1, 1)
+			frame.BackgroundColor3 = Color3.fromHSV(hue/256, .5, .8)
+			wait()
+		end
+	end
+end
+coroutine.wrap(FXOIBGV_fake_script)()
+local function PQCVVL_fake_script() -- MainFrame.Dragable 
+	local script = Instance.new('LocalScript', MainFrame)
+
+	local UserInputService = game:GetService("UserInputService")
+	local runService = (game:GetService("RunService"));
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	function Lerp(a, b, m)
+		return a + (b - a) * m
+	end;
+	
+	local lastMousePos
+	local DRAG_SPEED = (8);
+	function Update(dt)
+		if not (dragging) then return end;
+		if not (startPos) then return end;
+		local delta = (lastMousePos - UserInputService:GetMouseLocation())
+		local xGoal = (startPos.X.Offset - delta.X);
+		local yGoal = (startPos.Y.Offset - delta.Y);
+		gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+	end;
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+			lastMousePos = UserInputService:GetMouseLocation()
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	runService.Heartbeat:Connect(Update)
+end
+coroutine.wrap(PQCVVL_fake_script)()
+local function FLZZ_fake_script() -- AutofarmOn.RGBb1 
+	local script = Instance.new('LocalScript', AutofarmOn)
+
+	local frame = script.Parent
+	
+	while true do
+		for hue = 0, 255, 4 do
+			-- HSV = hue, saturation, value
+			-- If we loop from 0 to 1 repeatedly, we get a rainbow!
+			frame.BorderColor3 = Color3.fromHSV(hue/256, 1, 1)
+			frame.BackgroundColor3 = Color3.fromHSV(hue/256, .5, .8)
+			wait()
+		end
+	end
+end
+coroutine.wrap(FLZZ_fake_script)()
+local function QGMMGFR_fake_script() -- AutofarmOn.AFScript 
+	local script = Instance.new('LocalScript', AutofarmOn)
+
+	function leftClick()
+		local t = true
+		local f = false
+	
+		getgenv().orbs = t
+		while orbs do task.wait(0.1)
+			for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+				if v:IsA"Model" and v.Parent.Name == "Drops" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame
+				end
+			end
+		end
+	end
+	
+	function rightClick()
+		local t = true
+		local f = false
+	
+		getgenv().orbs = t
+		while orbs do task.wait(0.1)
+			for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+				if v:IsA"Model" and v.Parent.Name == "Drops" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame
+				end
+			end
+		end
+	end
+	
+	script.Parent.MouseButton1Click:Connect(leftClick)
+	script.Parent.MouseButton2Click:Connect(rightClick)
+end
+coroutine.wrap(QGMMGFR_fake_script)()
+local function TXDOQ_fake_script() -- MainFrame.SlideEffect 
+	local script = Instance.new('LocalScript', MainFrame)
+
+	local object = script.Parent
+	object.AnchorPoint = Vector2.new(0.5, 0.5)
+	object.Position = UDim2.new(0, -object.Size.X.Offset, 0.5, 0)
+	
+	wait(2)
+	
+	object:TweenPosition(UDim2.new(0.6, 0, 0.5, 0))
+end
+coroutine.wrap(TXDOQ_fake_script)()
+local function NHAUIJ_fake_script() -- AutofarmOff.RGBb1 
+	local script = Instance.new('LocalScript', AutofarmOff)
+
+	local frame = script.Parent
+	
+	while true do
+		for hue = 0, 255, 4 do
+			-- HSV = hue, saturation, value
+			-- If we loop from 0 to 1 repeatedly, we get a rainbow!
+			frame.BorderColor3 = Color3.fromHSV(hue/256, 1, 1)
+			frame.BackgroundColor3 = Color3.fromHSV(hue/256, .5, .8)
+			wait()
+		end
+	end
+end
+coroutine.wrap(NHAUIJ_fake_script)()
+local function CNZDMBU_fake_script() -- AutofarmOff.AFScript 
+	local script = Instance.new('LocalScript', AutofarmOff)
+
+	function leftClick()
+		local t = true
+		local f = false
+	
+		getgenv().orbs = f
+		while orbs do task.wait(0.1)
+			for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+				if v:IsA"Model" and v.Parent.Name == "Drops" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame
+				end
+			end
+		end
+	end
+	
+	function rightClick()
+		local t = true
+		local f = false
+	
+		getgenv().orbs = f
+		while orbs do task.wait(0.1)
+			for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+				if v:IsA"Model" and v.Parent.Name == "Drops" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame
+				end
+			end
+		end
+	end
+	
+	script.Parent.MouseButton1Click:Connect(leftClick)
+	script.Parent.MouseButton2Click:Connect(rightClick)
+end
+coroutine.wrap(CNZDMBU_fake_script)()
